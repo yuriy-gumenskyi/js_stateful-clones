@@ -24,6 +24,7 @@ function transformStateWithClones(state, actions) {
         clearProperties(stateClone, stateHistory);
         break;
     }
+    stateHistory.push({ ...stateClone });
   }
 
   return stateHistory;
@@ -31,23 +32,18 @@ function transformStateWithClones(state, actions) {
 
 function addProperties(objectToAddTo, dataToAdd, arrayLog) {
   Object.assign(objectToAddTo, dataToAdd);
-  arrayLog.push({ ...objectToAddTo });
 }
 
 function removeProperties(objectToRemoveFrom, keysToRemove, arrayLog) {
   for (const key of keysToRemove) {
     delete objectToRemoveFrom[key];
   }
-
-  arrayLog.push({ ...objectToRemoveFrom });
 }
 
 function clearProperties(objectToClear, arrayLog) {
   for (const key in objectToClear) {
     delete objectToClear[key];
   }
-
-  arrayLog.push({ ...objectToClear });
 }
 
 module.exports = transformStateWithClones;
